@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Installation de k6..."
-sudo gpg --no-default-keyring \
-  --keyring /usr/share/keyrings/k6-archive-keyring.gpg \
-  --keyserver hkp://keyserver.ubuntu.com:80 \
-  --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" \
-  | sudo tee /etc/apt/sources.list.d/k6.list
-sudo apt-get update -qq
-sudo apt-get install -y k6
+K6_VERSION="1.3.0"
 
-echo "Installation de Chromium pour le module navigateur..."
-sudo apt-get install -y chromium fonts-liberation libnss3 libatk-bridge2.0-0 libgbm1 || true
+echo "Installation de k6 ${K6_VERSION}..."
+cd /tmp
+curl -sL "https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz" -o k6.tar.gz
+tar -xzf k6.tar.gz
+sudo mv "k6-v${K6_VERSION}-linux-amd64/k6" /usr/local/bin/k6
+sudo chmod +x /usr/local/bin/k6
+rm -rf k6.tar.gz "k6-v${K6_VERSION}-linux-amd64"
 
 echo ""
-echo "======================================="
 k6 version
 echo "Environnement pret."
-echo "======================================="
