@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-K6_VERSION="1.3.0"
-
+K6_VERSION="2.2.0"
 echo "Installation de k6 ${K6_VERSION}..."
 cd /tmp
 curl -sL "https://github.com/grafana/k6/releases/download/v${K6_VERSION}/k6-v${K6_VERSION}-linux-amd64.tar.gz" -o k6.tar.gz
